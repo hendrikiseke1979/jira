@@ -9,8 +9,8 @@ import (
 
 	"github.com/coryb/figtree"
 	"github.com/coryb/oreo"
-	jira "github.com/go-jira/jira"
-	"github.com/go-jira/jira/jiracli"
+	jira "github.com/hendrikiseke1979/jira"
+	"github.com/hendrikiseke1979/jira/jiracli"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 	yaml "gopkg.in/coryb/yaml.v2"
 )

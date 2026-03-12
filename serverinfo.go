@@ -3,7 +3,7 @@ package jira
 import (
 	"encoding/json"
 
-	"github.com/go-jira/jira/jiradata"
+	"github.com/hendrikiseke1979/jira/jiradata"
 )
 
 func ServerInfo(ua HttpClient, endpoint string) (*jiradata.ServerInfo, error) {

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/go-jira/jira/jiradata"
+	"github.com/hendrikiseke1979/jira/jiradata"
 )
 
 // GetActiveSprint finds the active sprint for the given project by first

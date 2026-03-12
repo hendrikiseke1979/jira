@@ -3,7 +3,7 @@ package jira
 import (
 	"encoding/json"
 
-	"github.com/go-jira/jira/jiradata"
+	"github.com/hendrikiseke1979/jira/jiradata"
 )
 
 // https://docs.atlassian.com/jira/REST/cloud/#api/2/attachment-getAttachment

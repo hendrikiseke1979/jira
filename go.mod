@@ -1,4 +1,4 @@
-module github.com/go-jira/jira
+module github.com/hendrikiseke1979/jira
 
 go 1.12
 

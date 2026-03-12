@@ -16,7 +16,7 @@ const (
 	mothraLogin    = "mothra@corybennett.org"
 )
 
-var jira string = "../dist/github.com/go-jira/jira-linux-amd64"
+var jira string = "../dist/github.com/hendrikiseke1979/jira-linux-amd64"
 
 func Test_CLI(t *testing.T) {
 	// setup the jira cli environment
