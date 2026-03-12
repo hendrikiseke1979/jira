@@ -40,10 +40,13 @@ func CmdTransitionRegistry(transition string) *jiracli.CommandRegistryEntry {
 		help,
 		func(fig *figtree.FigTree, cmd *kingpin.CmdClause) error {
 			jiracli.LoadConfigs(cmd, fig, &opts)
-			if opts.Transition == "" {
-				opts.Transition = transition
-			}
-			return CmdTransitionUsage(cmd, &opts)
+			cmd.PreAction(func(_ *kingpin.ParseContext) error {
+				if opts.Transition == "" {
+					opts.Transition = transition
+				}
+				return nil
+			})
+			return CmdTransitionUsage(cmd, &opts, transition)
 		},
 		func(o *oreo.Client, globals *jiracli.GlobalOptions) error {
 			opts.Issue = jiracli.FormatIssue(opts.Issue, opts.Project)
@@ -52,7 +55,7 @@ func CmdTransitionRegistry(transition string) *jiracli.CommandRegistryEntry {
 	}
 }
 
-func CmdTransitionUsage(cmd *kingpin.CmdClause, opts *TransitionOptions) error {
+func CmdTransitionUsage(cmd *kingpin.CmdClause, opts *TransitionOptions, defaultTransition string) error {
 	jiracli.BrowseUsage(cmd, &opts.CommonOptions)
 	jiracli.TemplateUsage(cmd, &opts.CommonOptions)
 	cmd.Flag("noedit", "Disable opening the editor").SetValue(&opts.SkipEditing)
@@ -61,7 +64,7 @@ func CmdTransitionUsage(cmd *kingpin.CmdClause, opts *TransitionOptions) error {
 		return nil
 	}).String()
 	cmd.Flag("override", "Set issue property").Short('o').StringMapVar(&opts.Overrides)
-	if opts.Transition == "" {
+	if defaultTransition == "" {
 		cmd.Arg("TRANSITION", "State to transition issue to").Required().StringVar(&opts.Transition)
 	}
 	cmd.Arg("ISSUE", "issue to transition").Required().StringVar(&opts.Issue)
