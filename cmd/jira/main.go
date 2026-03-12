@@ -29,7 +29,7 @@ func main() {
 
 	jiracli.InitLogging()
 
-	configDir := ".jira.d"
+	configDir := jiracli.ConfigDir()
 
 	yaml.UseMapType(reflect.TypeOf(map[string]interface{}{}))
 	defer yaml.RestoreMapType()

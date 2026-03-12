@@ -21,6 +21,21 @@ func Homedir() string {
 	return os.Getenv("HOME")
 }
 
+// ConfigDir returns the jira config directory relative to Homedir().
+// It respects XDG_CONFIG_HOME: if set, returns a path relative to it;
+// otherwise defaults to .config/jira (i.e. ~/.config/jira).
+func ConfigDir() string {
+	xdgConfigHome := os.Getenv("XDG_CONFIG_HOME")
+	if xdgConfigHome != "" {
+		// Make it relative to Homedir() so figtree parent-path traversal works
+		rel, err := filepath.Rel(Homedir(), filepath.Join(xdgConfigHome, "jira"))
+		if err == nil {
+			return rel
+		}
+	}
+	return filepath.Join(".config", "jira")
+}
+
 func findClosestParentPath(fileName string) (string, error) {
 	cwd, err := os.Getwd()
 	if err != nil {

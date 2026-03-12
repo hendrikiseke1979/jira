@@ -26,7 +26,7 @@ import (
 )
 
 func findTemplate(name string) ([]byte, error) {
-	if file, err := findClosestParentPath(filepath.Join(".jira.d", "templates", name)); err == nil {
+	if file, err := findClosestParentPath(filepath.Join(ConfigDir(), "templates", name)); err == nil {
 		b, err := ioutil.ReadFile(file)
 		if err != nil {
 			return nil, err
@@ -37,8 +37,8 @@ func findTemplate(name string) ([]byte, error) {
 }
 
 func getTemplate(name string) (string, error) {
-	if _, err := os.Stat(".jira.d/" + name); err == nil {
-		b, err := ioutil.ReadFile(".jira.d/" + name)
+	if _, err := os.Stat(filepath.Join(ConfigDir(), name)); err == nil {
+		b, err := ioutil.ReadFile(filepath.Join(ConfigDir(), name))
 		if err != nil {
 			return "", err
 		}
