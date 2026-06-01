@@ -64,10 +64,12 @@ func GetActiveSprint(ua HttpClient, endpoint, project string) (*jiradata.Sprint,
 	if err := json.NewDecoder(sprintResp.Body).Decode(sprintList); err != nil {
 		return nil, err
 	}
-	if len(sprintList.Values) == 0 {
-		return nil, fmt.Errorf("no active sprint found for project %q", project)
+	for _, sprint := range sprintList.Values {
+		if sprint.OriginBoardID == boardID {
+			return sprint, nil
+		}
 	}
-	return sprintList.Values[0], nil
+	return nil, fmt.Errorf("no active sprint found for project %q", project)
 }
 
 // SprintAddIssues adds the given issues to the sprint with the given ID.
