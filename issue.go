@@ -541,6 +541,25 @@ func IssueAddComment(ua HttpClient, endpoint string, issue string, cp CommentPro
 	return nil, responseError(resp)
 }
 
+// https://docs.atlassian.com/jira/REST/cloud/#api/2/issue/{issueIdOrKey}/comment-deleteComment
+func (j *Jira) IssueRemoveComment(issue, commentID string) error {
+	return IssueRemoveComment(j.UA, j.Endpoint, issue, commentID)
+}
+
+func IssueRemoveComment(ua HttpClient, endpoint string, issue, commentID string) error {
+	uri := URLJoin(endpoint, "rest/api/2/issue", issue, "comment", commentID)
+	resp, err := ua.Delete(uri)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == 204 {
+		return nil
+	}
+	return responseError(resp)
+}
+
 type UserProvider interface {
 	ProvideUser() *jiradata.User
 }

@@ -47,6 +47,7 @@ func CmdCommentUsage(cmd *kingpin.CmdClause, opts *CommentOptions) error {
 	cmd.Flag("noedit", "Disable opening the editor").SetValue(&opts.SkipEditing)
 	cmd.Flag("comment", "Comment message for issue").Short('m').PreAction(func(ctx *kingpin.ParseContext) error {
 		opts.Overrides["comment"] = jiracli.FlagValue(ctx, "comment")
+		opts.SkipEditing.Value = true
 		return nil
 	}).String()
 	cmd.Arg("ISSUE", "issue id to update").StringVar(&opts.Issue)
